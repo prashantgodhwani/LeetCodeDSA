@@ -1,4 +1,4 @@
-public class Leetcode_RemoveNthNodeFromLinkedList_19 {
+public class Leetcode_SwapNodesInPairs_24 {
 
     public static class ListNode {
         int val;
@@ -28,9 +28,8 @@ public class Leetcode_RemoveNthNodeFromLinkedList_19 {
     public static void main(String[] args) {
         ListNode l1 = new ListNode(1);
 
-        Leetcode_RemoveNthNodeFromLinkedList_19 l = new Leetcode_RemoveNthNodeFromLinkedList_19();
-        int k = 1;
-        ListNode head = l.removeNthFromEnd(l1, k);
+        Leetcode_SwapNodesInPairs_24 l = new Leetcode_SwapNodesInPairs_24();
+        ListNode head = l.swapPairs(l1, 0);
 
         while(head != null){
             System.out.println(head.val);
@@ -39,27 +38,22 @@ public class Leetcode_RemoveNthNodeFromLinkedList_19 {
 
     }
 
-    public ListNode removeNthFromEnd(ListNode l1, int k) {
-        ListNode head = l1;
+    private ListNode swapPairs(ListNode l1, int idx) {
 
-        while(l1 != null && k != 0){
-            l1 = l1.next;
-            k--;
+        if(l1==null || l1.next == null) return l1;
+
+        ListNode temp = l1.next.next;
+        ListNode head = null;
+        l1.next.next = l1;
+        if(idx == 0){
+            head = l1.next;
         }
+        ListNode r = l1.next;
+        l1.next = swapPairs(temp, idx + 1);
 
-        ListNode toBeDeleted = head;
-        while(l1 != null && l1.next != null){
-            l1 = l1.next;
-            toBeDeleted = toBeDeleted.next;
+        if(idx == 0){
+            return head;
         }
-
-        if(toBeDeleted == head && l1 == null){
-            head = head.next;
-        }else {
-            toBeDeleted.next = toBeDeleted.next.next;
-        }
-
-
-        return head;
+        return r;
     }
 }
